@@ -5,9 +5,6 @@ import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } 
 class Navigation extends Component {
 
     render() {
-        const handleSetActive = (to) => {
-            console.log(to);
-          }
         return (
 <header style={{position:'fixed', width:'100%'}}>  
 <nav className="navbar navbar-default">
@@ -25,13 +22,15 @@ class Navigation extends Component {
     <div className="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
       <ul className="nav navbar-nav">
         <li>
-        <Link to="red"  activeClass="active" spy={true} smooth={true} offset={50}  duration={500} hashSpy={true} >
-        Home</Link> 
+        {/* <Link to="red"  activeClass="active" spy={true} smooth={true} offset={50}  duration={500} hashSpy={true} >
+        Home</Link>  */}
+        <a href="#red" className="scroll">Home</a>
         </li>
         <li>
-            <Link to="blue" activeClass="active" spy={true} smooth={true} offset={50} hashSpy={true} duration={500}>
+            {/* <Link to="blue" activeClass="active" spy={true} smooth={true} offset={50} hashSpy={true} duration={500}>
            About us
-            </Link>
+            </Link> */}
+            <a href="#blue" className="scroll">Second</a>
             </li>
         </ul>
         </div>
