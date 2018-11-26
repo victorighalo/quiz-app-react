@@ -29,18 +29,18 @@ module.exports = {
             {
               test: /\.svg$/,
               loader: 'svg-inline-loader'
-          },
+            },
  
-        {
-          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-          use: [{
-              loader: 'file-loader',
-              options: {
-                  name: '[name].[ext]',
-                  outputPath: 'fonts/'
-              }
-          }]
-      },
+            {
+              test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+              use: [{
+                  loader: 'file-loader',
+                  options: {
+                      name: '[name].[ext]',
+                      outputPath: 'fonts/'
+                  }
+              }]
+          },
         {
           "enforce": "pre",
           "test": /\.js$/,
@@ -50,6 +50,34 @@ module.exports = {
             path.join(process.cwd(), 'node_modules')
           ]
         },
+        {
+          test: /\.(pdf|jpg|png|gif|svg|ico)$/,
+          use: [
+              {
+                  loader: 'url-loader'
+              },
+          ]
+      },
+      {
+        test: /\.(scss)$/,
+        use: [{
+          loader: 'style-loader', 
+        }, {
+          loader: 'css-loader', 
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                require('precss'),
+                require('autoprefixer')
+              ];
+            }
+          }
+        }, {
+          loader: 'sass-loader' // compiles Sass to CSS
+        }]
+      }
           ]
     },
     plugins: [

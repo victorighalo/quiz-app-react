@@ -1,47 +1,31 @@
 import React, { Component } from 'react';
-import * as Scroll from 'react-scroll';
-import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import { Link } from "react-router-dom";
 
 class Navigation extends Component {
 
-    render() {
-        return (
-<header style={{position:'fixed', width:'100%'}}>  
-<nav className="navbar navbar-default">
-  <div className="container">
-  <div className="row">
-  <div className="col-sm-3">
-    <div className="navbar-header">
-      <a className="navbar-brand" href="#">
-        <img alt="Brand" src="..."/>
-      </a>
-    </div>
-    </div>
-
- <div className="col-sm-9">
-    <div className="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
-      <ul className="nav navbar-nav">
-        <li>
-        {/* <Link to="red"  activeClass="active" spy={true} smooth={true} offset={50}  duration={500} hashSpy={true} >
-        Home</Link>  */}
-        <a href="#red" className="scroll">Home</a>
-        </li>
-        <li>
-            {/* <Link to="blue" activeClass="active" spy={true} smooth={true} offset={50} hashSpy={true} duration={500}>
-           About us
-            </Link> */}
-            <a href="#blue" className="scroll">Second</a>
-            </li>
-        </ul>
-        </div>
-        </div>
-        </div>
+render() {
+return (
+<header>  
+<nav className="navbar navbar-expand-lg navbar-light bg-light">
+  <Link className="navbar-brand" to="/">Home</Link>
+  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+  </button>
+  <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li className="nav-item active">
+      <Link to="/login">Login</Link>
+      </li>
+      <li className="nav-item active">
+      <Link to="/register">Register</Link>
+      </li>
+    </ul>
   </div>
 </nav>
 </header>
         
-        );
-    }
+ );
+  }
 }
 
 export default Navigation;

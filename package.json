@@ -5,7 +5,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "autoprefixer": "^9.3.1",
-    "bootstrap": "3",
+    "bootstrap": "4.1.3",
     "css-loader": "^1.0.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.4",
@@ -13,6 +13,8 @@
     "precss": "^3.1.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-icons": "^3.2.2",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
     "react-scroll": "^1.7.10",
     "sass-loader": "^7.1.0",
@@ -21,7 +23,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --hot --open --port 4000",
-    "build": "react-scripts build",
+    "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -40,8 +42,10 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
+    "exports-loader": "^0.7.0",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^4.0.0-beta.2",
+    "node-sass": "^4.10.0",
     "source-map-loader": "^0.2.4",
     "svg-inline-loader": "^0.8.0",
     "ttf-loader": "^1.0.2",
