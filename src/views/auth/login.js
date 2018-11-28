@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 
 class login extends Component{
+
+    validateFormField(){
+        
+    }
     render(){
         return (
 <div className="container d-flex h-100">
@@ -10,11 +14,24 @@ class login extends Component{
   <form>
     <div className="form-group">
       <label for="exampleInputEmail1">Email address</label>
-      <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+      <input 
+      type="email" 
+      className="form-control"
+       id="exampleInputEmail1" 
+       aria-describedby="emailHelp"
+        placeholder="Enter email"
+        onChange={this.validateFormField}
+        />
     </div>
     <div className="form-group">
       <label for="exampleInputPassword1">Password</label>
-      <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+      <input 
+      type="password" 
+      className="form-control" 
+      id="exampleInputPassword1"
+       placeholder="Password"
+       onChange={this.validateFormField}
+       />
     </div>
     <button type="button" className="btn btn-primary btn-block">Login</button>
   </form>
