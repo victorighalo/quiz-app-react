@@ -8,6 +8,7 @@ class register extends Component{
             lastname: [ '', false],
             email: [ '', false],
             password: [ '', false],
+            submitting: false
         }
         this.validateForm = this.validateForm.bind(this)
     }
@@ -16,12 +17,15 @@ class register extends Component{
     //Methods
     validateForm(){
         let formState = true;
+        this.setState({submitting: true})
         Object.keys(this.state).forEach(element => {
+            if(element !== 'submitting'){
             if(!this.state[element][1]){
                 formState = false;
             }else{
                 formState = true;
             }
+        }
         });
         if(!formState){
             alert('Please fill all fields')
@@ -33,10 +37,12 @@ class register extends Component{
                 'password': this.state.password[0],
             }
             AuthService.register(data).then( (result) => {
-                return result;
+                console.log('Result', result);
+                this.setState({submitting: false})
                 } )
                 .catch( (err) => {
-                return err;
+                console.log('Error', err);
+                this.setState({submitting: false})
                 })
         }
     }
@@ -106,7 +112,7 @@ class register extends Component{
       onChange={this.validateFormField}
       />
     </div>
-    <button type="button" className="btn btn-primary btn-block" onClick={this.validateForm}>Register</button>
+    <button type="button" className="btn btn-primary btn-block" onClick={this.validateForm}>{this.state.submitting ? 'Submitting...': 'Register' }</button>
   </form>
     </div>
   </div>
