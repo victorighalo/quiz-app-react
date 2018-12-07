@@ -1,29 +1,48 @@
 import React, {Component} from 'react';
-
+import {AuthService} from '../../shared/services/'
 class register extends Component{
     constructor(props){
         super(props)
         this.state = {
-            firstname: [ '', true],
-            lastname: [ '', true],
-            email: [ '', true],
-            password: [ '', true],
+            firstname: [ '', false],
+            lastname: [ '', false],
+            email: [ '', false],
+            password: [ '', false],
         }
         this.validateForm = this.validateForm.bind(this)
     }
 
+
     //Methods
     validateForm(){
-        let form = this.state.formFields;
-        form.forEach(function(val, i){
-            if(val.firstname === ''){
-               alert(`First name is empty`)
+        let formState = true;
+        Object.keys(this.state).forEach(element => {
+            if(!this.state[element][1]){
+                formState = false;
+            }else{
+                formState = true;
             }
-        })
+        });
+        if(!formState){
+            alert('Please fill all fields')
+        }else{
+            let data = {
+                'firstname': this.state.firstname[0],
+                'lastname': this.state.lastname[0],
+                'email': this.state.email[0],
+                'password': this.state.password[0],
+            }
+            AuthService.register(data).then( (result) => {
+                return result;
+                } )
+                .catch( (err) => {
+                return err;
+                })
+        }
     }
     validateFormField = (event) =>{
         event.persist()
-        console.log(event.target.value.length)
+        // console.log(event.target.value.length)
    if(event.target.value.length < 1){
     this.setState(()=>{
         return {[event.target.id]: [event.target.value, false]}
