@@ -19,6 +19,9 @@ return (
       <li className="nav-item active">
       <Link to="/register">Register</Link>
       </li>
+      <li className="nav-item active">
+      <Link to="/questions">Questions</Link>
+      </li>
     </ul>
   </div>
 </nav>

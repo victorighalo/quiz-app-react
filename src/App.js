@@ -5,6 +5,7 @@ import 'bootstrap';
 import index from './views';
 import login from './views/auth/login';
 import register from './views/auth/register';
+import questions from './views/questions';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 class App extends Component {
 
@@ -16,6 +17,7 @@ class App extends Component {
      <Route exact path="/"  component={index}/>
      <Route path="/login"  component={login}/>
      <Route path="/register"  component={register}/>
+     <Route path="/questions"  component={questions}/>
       </div>
       </Router>
     );
