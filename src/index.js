@@ -5,5 +5,11 @@ import './index.css';
 import './custom.scss'
 import App from './App';
 import './assets/css/custom.css'
-
-ReactDOM.render(<App />, document.getElementById('root'));
+import {Provider} from 'react-redux'
+import store from './store/'
+ReactDOM.render(
+<Provider store={store}>
+<App />
+</Provider>
+, 
+document.getElementById('root'));

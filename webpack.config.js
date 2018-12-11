@@ -32,7 +32,7 @@ module.exports = {
             },
  
             {
-              test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+              test: /\.(woff(2)?|ttf|eot|svg|ico)(\?v=\d+\.\d+\.\d+)?$/,
               use: [{
                   loader: 'file-loader',
                   options: {
@@ -85,6 +85,7 @@ module.exports = {
     },
     plugins: [
       new HtmlWebpackPlugin({
+        favicon: './public/favicon.ico',
       template: './public/index.html'
   }),
   new webpack.ProvidePlugin({
