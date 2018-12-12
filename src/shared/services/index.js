@@ -1,3 +1,3 @@
 const AuthService = require('./AuthService');
-
-module.exports = {AuthService};
+const QuestionsService = require('./QuestionsService');
+module.exports = {AuthService, QuestionsService};
