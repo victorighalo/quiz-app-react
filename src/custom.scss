@@ -4,7 +4,12 @@
       }
 .jumbotron{
     background: #3454D1;
-    color: #fff
+    color: #fff;
+    border-radius: 0%;
+    -webkit-border-radius: 0%;
+    -moz-border-radius: 0%;
+    -ms-border-radius: 0%;
+    -o-border-radius: 0%;
 }
 .questions_box{
     background: #fff;
