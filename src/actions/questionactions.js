@@ -1,13 +1,13 @@
-import {QuestionsService} from '../shared/services/'
-import { func } from 'prop-types';
-import store from '../store/'
+import {QuestionsService} from '../shared/services/';
+import store from '../store/';
 
 export function getQuestions(){
     return function(dispatch){
         QuestionsService.getQuestions().then( (data) => {
+            let newQuestions = buildQuestions(data.data.questions);
             dispatch({
                 type: 'LOAD_QUESTIONS',
-                payload: data.data,
+                payload: newQuestions,
                 isLoaded: true,
                 error:false
             })
@@ -15,7 +15,7 @@ export function getQuestions(){
         .catch( (e) => {
             dispatch({
                 type: 'LOAD_QUESTIONS',
-                payload: [],
+                payload: e,
                 isLoaded: false,
                 error:true
             })
@@ -118,5 +118,17 @@ return function(dispatch){
             
 
 }
+}
+
+function buildQuestions(questions){
+    let newQuestions = [];
+        questions.map( (item) => {
+        newQuestions.push({
+            question: item,
+            answers: ['1', '2', '3'],
+            answer:1
+        })
+    });
+        return newQuestions;
 }
 
