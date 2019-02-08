@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from 'react-router-dom'
 import { getQuestions, answerQuestion, closeTest } from "../../actions/questionactions";
-import {withRouter} from "react-router-dom/es/withRouter";
+
 
 class index extends Component {
   constructor(props) {
@@ -19,15 +19,10 @@ class index extends Component {
   }
     componentWillReceiveProps(props) {
         const {questions} = props
-        let completed = null;
-        questions.questions.map( (item) => {
-          if(item.answered == 1 && item.error == 0){
-            completed = 'yes'
-          }else{
-              completed = 'no'
-          }
+        let completed = questions.questions.every( (item) => {
+          return (item.answered == 1 && item.error == 0)
         });
-        if (completed == 'yes') {
+        if (completed) {
             this.setState({
                 completed: true
             });
@@ -115,7 +110,7 @@ const mapStateToProps = state => {
   };
 };
 const actions = { getQuestions, answerQuestion, closeTest };
-export default withRouter(connect(
+export default connect(
   mapStateToProps,
   actions
-)(index));
+)(index);
