@@ -1,22 +1,28 @@
 import React, { Component } from "react";
 import 'bootstrap';
-import index from './views';
-import questions from './views/questions';
-import successful from './views/successful';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import Index from './views';
+import Questions from './views/questions';
+import Successful from './views/successful';
+import NoMatch from './views/404';
+
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 class App extends Component {
 
   render() {
     return (
       <Router>
       <div>
-     <Route exact path="/"  component={index}/>
-     <Route path="/questions"  component={questions}/>
-     <Route path="/successful"  component={successful}/>
+          <Switch>
+     <Route exact path="/"  component={Index}/>
+     <Route path="/questions"  component={Questions}/>
+     <Route path="/successful"  component={Successful}/>
+          <Route component={NoMatch} />
+          </Switch>
       </div>
       </Router>
     );
   }
 }
+
 
 export default App;

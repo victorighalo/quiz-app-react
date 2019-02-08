@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { getQuestions, answerQuestion, closeTest } from "../../actions/questionactions";
 
 
-class index extends Component {
+class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -113,4 +113,4 @@ const actions = { getQuestions, answerQuestion, closeTest };
 export default connect(
   mapStateToProps,
   actions
-)(index);
+)(Index);
