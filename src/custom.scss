@@ -13,72 +13,21 @@
 }
 .questions_box{
     background: #fff;
-    margin-top:-80px
+    margin-top:80px
 }
-input[type=radio]{
-    position: absolute;
-    visibility: hidden;
+.box{
+  margin: 30px auto;
+}
+  .question_item{
+    background: #fff;
+    margin: 40px auto;
+    padding: 20px 20px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
   }
-  .active-label, label:focus, label:hover, label:active, input:checked + label {
-    color: #FF9800;
-  }
-  .active-label:before, label:focus:before, label:hover:before, label:active:before, input:checked + label:before {
-    background: white;
-    border-color: #FF9800;
-  }
-  label {
-    font-size: 0.8rem;
-    font-weight: bold;
-    line-height: 3;
-    cursor: pointer;
-    display: block;
-    padding: 0.8rem 1rem 0.8rem 3rem;
-    position: relative;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    background: #f9f9f9;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-transition: all .15s ease;
-    transition: all .15s ease;
-    /**
-     * This is the radio fake dot basically
-     */
-  }
-  label:first-of-type {
-    border: 0;
-  }
-  label:before {
-    content: "";
-    position: absolute;
-    left: 0.8rem;
-    top: 1.2rem;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: .2rem solid #ccc;
-  }
-
-  input[name=options]:checked + label:before {
-    border-color: white;
-    border: none;
-    background: #FF9800;
-  }
-  input[name=options]:checked + label {
-    color: #fff;
-    background: #FF9800;
-  }
-  
-  
-  input:disabled + label {
-    background: #efefef;
-    color: rgba(0, 0, 0, 0.5);
-    cursor: not-allowed;
-  }
-  input:disabled + label:hover {
-    border-color: rgba(0, 0, 0, 0.1);
-  }
-  input:disabled + label:before {
-    border-color: white;
-    background: white;
+  input[type=radio] {
+    margin: 10px;
   }
 }

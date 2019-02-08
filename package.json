@@ -30,7 +30,7 @@
   "scripts": {
     "start": "webpack-dev-server --hot --open --port 4000",
     "build": "webpack",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -51,6 +51,7 @@
     "exports-loader": "^0.7.0",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^4.0.0-beta.2",
+    "jest": "^24.1.0",
     "node-sass": "^4.10.0",
     "source-map-loader": "^0.2.4",
     "svg-inline-loader": "^0.8.0",

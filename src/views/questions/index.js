@@ -1,173 +1,104 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getUser, addUser } from "../../actions/useractions";
-import { getQuestions, setQuestion } from "../../actions/questionactions";
-import Counter from "../../components/counter";
+import { Redirect } from 'react-router-dom'
+import { getQuestions, answerQuestion, closeTest } from "../../actions/questionactions";
+import {withRouter} from "react-router-dom/es/withRouter";
+
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      answerChosen: false,
-      answerValue: "",
-      answerIndex: ""
+      completed: false
     };
     this.answer = this.answer.bind(this);
-    this.answerChosen = this.answerChosen.bind(this);
+    this.closeTest = this.closeTest.bind(this);
   }
 
   componentDidMount() {
     this.props.getQuestions();
   }
-  componentWillReceiveProps() {
-    this.setState(prevState => {
-      return {
-        answerValue: ""
-      };
-    });
-  }
-  answer(event) {
-    if (event.target.id === "less") {
-      this.props.setQuestion(event.target.id);
-    } else {
-      if (this.state.answerChosen) {
-        this.props.setQuestion(
-          event.target.id,
-          this.state.answerIndex,
-          this.state.answerValue
-        );
-        this.setState(() => {
-          return {
-            answerChosen: false,
-            answerIndex: "",
-            answeredValue: ""
-          };
+    componentWillReceiveProps(props) {
+        const {questions} = props
+        let completed = null;
+        questions.questions.map( (item) => {
+          if(item.answered == 1 && item.error == 0){
+            completed = 'yes'
+          }else{
+              completed = 'no'
+          }
         });
-      } else {
-        alert("Please select an answer");
-      }
+        if (completed == 'yes') {
+            this.setState({
+                completed: true
+            });
+        }
     }
+
+  answer(event) {
+      event.persist();
+      this.props.answerQuestion(event.target.id, event.target.dataset.ans)
   }
-  answerChosen(event) {
-    console.log("Asnwer Index", this.state.answerIndex);
-    event.persist();
-    this.setState(prevState => {
-      return {
-        answerChosen: true,
-        answerValue: event.target.value,
-        answerIndex: event.target.id
-      };
-    });
+    closeTest(event) {
+      this.props.closeTest()
+        if(!this.state.completed){
+            alert('Answer all questions');
+        }else{
+            this.props.history.push('/successful')
+        }
   }
 
-  setQuestionToAlreadyAnswered() {
-    this.setState(prevState => {
-      return {
-        answerChosen: false
-      };
-    });
-  }
   render() {
     // Destructure Qustions from store
-    const { questions, quiz, answers } = this.props;
-    let counter, nextBtn, prevBtn, answeredValue;
-    if (questions.isLoaded) {
-      counter = (
-        <Counter index={quiz.index + 1} max={questions.questions.length} />
-      );
-    } else {
-      counter = <p className="text-center">Loading...</p>;
-    }
-    if (quiz.max === 1) {
-      nextBtn = (
-        <button
-          className="btn btn-primary btn-md disabled"
-          id="add"
-          onClick={this.answer}
-          disabled
-        >
-          Answer
-        </button>
-      );
-    } else {
-      nextBtn = (
-        <button
-          className="btn btn-primary btn-md"
-          id="add"
-          onClick={this.answer}
-        >
-          Answer
-        </button>
-      );
-    }
-    if (quiz.min === 1) {
-      prevBtn = (
-        <button
-          className="btn btn-primary btn-md disabled"
-          id="less"
-          onClick={this.answer}
-          disabled
-        >
-          Back
-        </button>
-      );
-    } else {
-      prevBtn = (
-        <button
-          className="btn btn-primary btn-md"
-          id="less"
-          onClick={this.answer}
-        >
-          Back
-        </button>
-      );
-    }
-    answers.forEach((item, index) => {
-      if (item.index === quiz.index) {
-        answeredValue = item.answer.answerIndex;
-        this.setQuestionToAlreadyAnswered();
+    const { questions} = this.props;
+    let counter, nextBtn, prevBtn, answeredValue, questionsData;
+
+      if (questions.isLoaded) {
+      } else {
+          counter = <p className="text-center">Loading...</p>;
       }
-    });
 
     return (
       <div className="questions_container">
-        <div className="jumbotron">
-          <h4>Counters</h4>
-          {this.state.answerIndex} {this.state.answerChosen ? "Yes" : "No"}{" "}
-          {"ans val " + answeredValue}
-        </div>
+          {counter}
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-sm-6 questions_box">
-              {counter}
               <div className="quiz-questions">
-                <h3>{quiz.question}</h3>
                 <div className="box animated fadeIn">
-                  <form>
-                    {quiz.options.map((item, i) => {
+                    {questions.questions.map( (item, index) => {
                       return (
-                        <div key={i}>
+                        <div key={index} className="question_item">
+                            <h4 className={item.error == 0 ? '' : 'text-danger'}>({index+1})  {item.question}</h4>
+                            <div>
+                                <form
+                                    ref={form => this.form = form}
+                                >
+                            {item.answers.map( (ans, i) => {
+                                return (
+                                    <span key={i}>
                           <input
                             type="radio"
-                            name="options"
-                            id={i}
-                            value={item.value}
-                            checked={
-                              this.state.answerIndex == i ||
-                              (answeredValue != undefined && answeredValue == i)
-                            }
-                            onChange={this.answerChosen}
+                            name={index}
+                            id={index}
+                            data-ans={ans}
+                            onChange={this.answer}
                           />
-                          <label htmlFor={i}>
-                            {item.value} {i}
-                          </label>
+                                <label htmlFor={i}>
+                                    {ans}
+                                </label>
+                                      </span>
+                                )
+                            })}
+                                </form>
+                            </div>
                         </div>
                       );
                     })}
-                  </form>
+                    {questions.isLoaded &&
                   <div className="row justify-content-center pt- pb-3">
-                    <div className="col-xs-6 p-4">{prevBtn}</div>
-                    <div className="col-xs-6 p-4">{nextBtn}</div>
+                    <div className="col-xs-6 p-4"><button className="btn btn-md- btn-primary" onClick={this.closeTest}>Submit</button></div>
                   </div>
+                    }
                 </div>
               </div>
             </div>
@@ -180,14 +111,11 @@ class index extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    questions: state.questions,
-    quiz: state.quiz,
-    answers: state.answers
+    questions: state.questions
   };
 };
-const actions = { getQuestions, setQuestion };
-export default connect(
+const actions = { getQuestions, answerQuestion, closeTest };
+export default withRouter(connect(
   mapStateToProps,
   actions
-)(index);
+)(index));

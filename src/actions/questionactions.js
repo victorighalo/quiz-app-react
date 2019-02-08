@@ -1,5 +1,5 @@
-import {QuestionsService} from '../shared/services/';
-import store from '../store/';
+import {QuestionsService} from '../shared/services/index';
+import store from '../store/index';
 
 export function getQuestions(){
     return function(dispatch){
@@ -23,100 +23,36 @@ export function getQuestions(){
     }
 }
 
-export function setQuestion(action, answerIndex, answerValue){
+export function answerQuestion(questionIndex, userAns){
 return function(dispatch){
-    const {quiz, questions, answers} = store.getState()
-    let currentIndex,min = 0, max = 0;
-        if(action === 'add'){
-            currentIndex = quiz.index + 1;
-        }else{
-            currentIndex = quiz.index - 1;
-        }
+    const { questions} = store.getState()
 
-        //This controls the state of the questions being answered
-        //Like the buttons being dsiabled, etc
-        if(currentIndex === questions.questions.length){
-            currentIndex = quiz.index;
-            max = 1;
-            min = 0;
-        }
-        else if(currentIndex < 0){
-            currentIndex = quiz.index;
-            min = 1;
-            max = 0;
-        }
-    
         //Find the next question
-        let question =  questions.questions.find( (item, index) => 
-        index === currentIndex
+        let question =  questions.questions.find( (item, index) =>
+        index == questionIndex
         );
 
+    question.answered = 1;
+    question.userAns = userAns;
         //Dispatch the next question to the Quiz Reducer
    dispatch(
        {
-           type: 'SET_QUESTION',
-           index:currentIndex,
-           min:min,
-           max:max,
-           answerOption: question.answerOption,
-           answerValue: question.answerValue, 
-           options: question.options,
-           question: question.question,
-           id: question._id
+           type: 'EDIT_QUESTION',
+           payload:question,
+
        }
           )
+}
+}
 
+export function closeTest(){
+return function(dispatch){
+   dispatch(
+       {
+           type: 'VALIDATE_QUESTION'
 
-    //Add answer is answer array is empty
-    if(answers.length < 1){
-        dispatch(
-            {
-               type:'SET_ANSWER',
-               payload: {
-               index:quiz.index,
-               answerOption: quiz.answerOption,
-               answerValue: quiz.answerValue,
-               options: quiz.options,
-               question: quiz.question,
-               id: quiz._id,
-               answer: {
-               answerIndex: answerIndex,
-               answerValue:answerValue
-               }
-           }
-            }
-        )
-    }else{
-        console.log(quiz.index)
-        let answer =  answers.find( (item, index) => {
-        return item.index === quiz.index
-        }
-        );
-        // console.log('Answer already is store', answer); 
-        if(!answer)
-        {
-         dispatch(
-             {
-                type:'SET_ANSWER',
-                payload: {
-                index:quiz.index,
-                answerOption: quiz.answerOption,
-                answerValue: quiz.answerValue,
-                options: quiz.options,
-                question: quiz.question,
-                id: quiz._id,
-                answer: {
-                answerIndex: answerIndex,
-                answerValue:answerValue
-                }
-            }
-             }
-         )
-            }
-    }
-    
-            
-
+       }
+          )
 }
 }
 
@@ -126,7 +62,10 @@ function buildQuestions(questions){
         newQuestions.push({
             question: item,
             answers: ['1', '2', '3'],
-            answer:1
+            answer:1,
+            answered:0,
+            userAns: '',
+            error: 0
         })
     });
         return newQuestions;
